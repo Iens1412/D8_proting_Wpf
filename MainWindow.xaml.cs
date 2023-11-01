@@ -1,4 +1,5 @@
-﻿using System;
+﻿using D8_porting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,20 +31,27 @@ namespace D8_porting_WPF
             string output = "Key pressed: ";
             output += e.Key.ToString();
             KeyPressDisplay.Text = output;
-            if(e.Key == Key.Escape)
-            {
-                System.Windows.Application.Current.Shutdown();
-            }
-            else if(e.Key == Key.A)
-            {
-                Title.Text = "AAAAAAAAAH!";
-                Text.Text = "Namen aaaaah!\nÅååååh!\nÄäääää!";
-            }
-            else if (e.Key == Key.I)
-            {
-                Title.Text = "IIIIIIIIIH!";
-                Text.Text = "Jasäjabah iiiiiiiih!";
-            }
+
+            Title.Text = Scenery.HelpTitle();
+            Text.Text = Scenery.HelpText();
+
+            if (e.Key == Key.Escape)
+                {
+                    System.Windows.Application.Current.Shutdown();
+                }
+                else if (e.Key == Key.H)
+                {
+                    Title.Text = Scenery.HelpTitle();
+                    Text.Text = Scenery.HelpText();
+                }
+                else if (e.Key == Key.N || e.Key == Key.F || e.Key == Key.S)
+                {
+                    string command = e.Key.ToString().ToLower();
+                    Scenery.DoCommand(command);
+                
+                    Title.Text = Scenery.CurrentTitle(command);
+                    Text.Text = Scenery.CurrentText(command);
+                }
         }
     }
 }
